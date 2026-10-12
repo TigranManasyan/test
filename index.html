@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $.ajax({
+                url:"http://localhost:8000/api/students",
+                method:"get",
+                dataType:"json",
+                success:function(response) {
+                    console.log(response);
+                }
+            });
+
+
+
+
+            $("#save").click(function() {
+                let name = $("#student_name").val();
+                let age = $("#student_age").val();
+                let course = $("#student_course").val();
+
+                $.ajax({
+                url:"http://localhost:8000/api/students",
+                method:"post", 
+                contentType:'application/json',
+                dataType:'json',
+                data:JSON.stringify({name, age, course}),
+                success:function(response) {
+                    console.log(response);
+                }
+            });
+            });
+
+             $("#edit").click(function() {
+                let name = $("#student_name").val();
+                let age = $("#student_age").val();
+                let course = $("#student_course").val();
+                let id = $("#student_id").val();
+
+                $.ajax({
+                url:`http://localhost:8000/api/students/{id}`,
+                method:"put", 
+                contentType:'application/json',
+                dataType:'json',
+                data:JSON.stringify({name, age, course}),
+                success:function(response) {
+                    console.log(response);
+                }
+            });
+            })
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <input type="text" id="student_name" placeholder="John Smith"> 
+    </div>
+    <div>
+        <input type="text" id="student_age" placeholder="22"> 
+    </div>
+    <div>
+        <input type="text" id="student_course" placeholder="Python"> 
+    </div>
+    <div>
+        <input type="text" id="student_id" placeholder="1"> 
+    </div>
+    <button id="save">Save</button>
+    <button id="edit">Edit</button>
+</body>
+</html>
